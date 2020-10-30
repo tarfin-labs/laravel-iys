@@ -145,4 +145,50 @@ class IysTest extends TestCase
             return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers";
         });
     }
+
+    /** @test */
+    public function user_can_get_all_retailers()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->retailers()->all();
+
+        Http::assertSent(function ($request) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers";
+        });
+    }
+
+    /** @test */
+    public function user_can_get_all_retailers_with_pagination_options()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->retailers()->all(100, 10);
+
+        $query = http_build_query([
+            'offset' => 100,
+            'limit'  => 10,
+        ]);
+
+        Http::assertSent(function ($request) use ($query) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers?{$query}";
+        });
+    }
+
+    /** @test */
+    public function user_can_get_a_retailer()
+    {
+        Http::fake();
+
+        $retailerCode = 66438915;
+
+        $iys = new Iys();
+        $response = $iys->retailers()->find($retailerCode);
+
+        Http::assertSent(function ($request) use ($retailerCode) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers/{$retailerCode}";
+        });
+    }
 }
