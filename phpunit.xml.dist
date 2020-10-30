@@ -14,19 +14,25 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
-        </whitelist>
-    </filter>
-    <php>
-        <env name="DB_CONNECTION" value="testing"/>
-    </php>
+    <coverage>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+        <report>
+            <html outputDirectory="build/coverage"/>
+            <text outputFile="build/coverage.txt"/>
+            <clover outputFile="build/logs/clover.xml"/>
+        </report>
+    </coverage>
     <logging>
-        <log type="tap" target="build/report.tap"/>
-        <log type="junit" target="build/report.junit.xml"/>
-        <log type="coverage-html" target="build/coverage"/>
-        <log type="coverage-text" target="build/coverage.txt"/>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <junit outputFile="build/report.junit.xml"/>
     </logging>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_KEY" value="base64:OmpfXub8W2EaVQ6Wem2lIJXUTdTaTwsXnaSnVfcEv6A="/>
+        <env name="IYS_URL" value="https://api.sandbox.iys.org.tr"/>
+        <env name="IYS_USERNAME" value="mehmetyilmaz@sirketepostam.com"/>
+        <env name="IYS_PASSWORD" value="****"/>
+        <env name="IYS_CODE" value="123456"/>
+    </php>
 </phpunit>
