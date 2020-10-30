@@ -55,7 +55,7 @@ class Client
     {
         $response = Http::withToken($this->token)->post($this->url . $endpoint, $params);
 
-        $response->throw()->json();
+        return $response->throw()->json();
     }
 
     public function getJson($endpoint, $params = null)

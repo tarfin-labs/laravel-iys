@@ -22,4 +22,16 @@ class Iys
 
         return $client->getJson("/sps/{$this->config['iys_code']}/brands");
     }
+
+    /**
+     * Alıcıdan alınmış izinleri tekil olarak İYS'ye yükler.
+     *
+     * @param array $params
+     */
+    public function addConsent(array $params)
+    {
+        $client = new Client();
+
+        return $client->postJson("/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents", $params);
+    }
 }

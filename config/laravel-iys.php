@@ -20,4 +20,9 @@ return [
      * Iys code for your brand.
      */
     'iys_code' => env('IYS_CODE'),
+
+    /**
+     * Iys brand code for your brand.
+     */
+    'brand_code' => env('IYS_BRAND_CODE'),
 ];

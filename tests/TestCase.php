@@ -9,13 +9,13 @@ use TarfinLabs\Iys\IysServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
+    protected $config;
     protected Generator $faker;
 
     public function setUp(): void
     {
         parent::setUp();
-
-        $oauthUrl = config('laravel-iys.url') . '/oauth2/token';
+        $this->config = config('laravel-iys');
 
         Http::fake(Response::all());
     }
