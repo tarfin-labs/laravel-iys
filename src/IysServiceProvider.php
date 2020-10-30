@@ -13,24 +13,7 @@ class IysServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/laravel-iys.php' => config_path('laravel-iys.php'),
             ], 'config');
-
-            $this->publishes([
-                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/laravel-iys'),
-            ], 'views');
-
-            $migrationFileName = 'create_laravel_iys_table.php';
-            if (! $this->migrationFileExists($migrationFileName)) {
-                $this->publishes([
-                    __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
-                ], 'migrations');
-            }
-
-            $this->commands([
-                IysCommand::class,
-            ]);
         }
-
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-iys');
     }
 
     public function register()

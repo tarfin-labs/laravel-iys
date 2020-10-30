@@ -12,26 +12,22 @@ class Iys
     }
 
     /**
-     * Hizmet sağlayıcı hesabınızın altında bulunan markalarınızını listeler.
+     * Marka işlemleri.
      *
-     * @return array|mixed
+     * @return Brand
      */
     public function brands()
     {
-        $client = new Client();
-
-        return $client->getJson("/sps/{$this->config['iys_code']}/brands");
+        return new Brand();
     }
 
     /**
-     * Alıcıdan alınmış izinleri tekil olarak İYS'ye yükler.
+     * İzin işlemleri.
      *
-     * @param array $params
+     * @return Consent
      */
-    public function addConsent(array $params)
+    public function consents()
     {
-        $client = new Client();
-
-        return $client->postJson("/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents", $params);
+        return new Consent();
     }
 }

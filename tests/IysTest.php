@@ -11,7 +11,7 @@ class IysTest extends TestCase
     public function user_can_get_brands()
     {
         $iys = new Iys();
-        $response = $iys->brands();
+        $response = $iys->brands()->all();
 
         Http::assertSent(function ($request) {
             return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands";
@@ -24,7 +24,7 @@ class IysTest extends TestCase
         Http::fake();
 
         $iys = new Iys();
-        $response = $iys->addConsent([
+        $response = $iys->consents()->create([
             'consentDate'    => '2018-02-10 09:30:00',
             'source'         => 'HS_CAGRI_MERKEZI',
             'recipient'      => '+905813334455',
