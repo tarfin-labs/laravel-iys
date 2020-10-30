@@ -30,4 +30,14 @@ class Iys
     {
         return new Consent();
     }
+
+    /**
+     * Bayi işlemleri.
+     *
+     * @return Retailer
+     */
+    public function retailers()
+    {
+       return new Retailer();
+    }
 }

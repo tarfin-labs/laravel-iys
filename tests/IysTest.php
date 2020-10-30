@@ -117,4 +117,32 @@ class IysTest extends TestCase
             return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/request/{$requestId}";
         });
     }
+
+    /** @test */
+    public function user_can_create_a_retailer()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->retailers()->create([
+            'tckn'   => 42790000000,
+            'name'   => 'Adım Soyadım',
+            'city'   => [
+                'name' => 'İstanbul',
+                'code' => '34'
+            ],
+            'town'   => [
+                'name' => 'Şişli',
+                'code' => '05'
+            ],
+            'title'  => 'ADIM SOYADIM TİCARET',
+            'mersis' => '0015001526400496',
+            'alias'  => 'ŞİŞLİ MAĞAZASI',
+            'mobile' => '+905357990000'
+        ]);
+
+        Http::assertSent(function ($request) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers";
+        });
+    }
 }
