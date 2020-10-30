@@ -28,6 +28,20 @@ class Consent
     }
 
     /**
+     * Alıcıdan alınmış izinleri yığın olarak İYS'ye yükler.
+     * Doc: https://dev.iys.org.tr/api-metotlar/izin-yonetimi/asenkron-coklu-izin-ekleme/
+     *
+     * @param array $params
+     * @return array|mixed
+     */
+    public function createMany(array $params)
+    {
+        $client = new Client();
+
+        return $client->postJson($this->endpoint . '/request', $params);
+    }
+
+    /**
      * Hizmet sağlayıcıların İYS'de kayıtlı olan izinlerini tekil olarak listelemelerini sağlar.
      * Doc: https://dev.iys.org.tr/api-metotlar/izin-yonetimi/tekil-izin-durumu-sorgulama/
      *
