@@ -191,4 +191,19 @@ class IysTest extends TestCase
             return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers/{$retailerCode}";
         });
     }
+
+    /** @test */
+    public function user_can_delete_a_retailer()
+    {
+        Http::fake();
+
+        $retailerCode = 66438915;
+
+        $iys = new Iys();
+        $response = $iys->retailers()->delete($retailerCode);
+
+        Http::assertSent(function ($request) use ($retailerCode) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers/{$retailerCode}";
+        });
+    }
 }

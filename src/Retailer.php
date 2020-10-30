@@ -65,4 +65,19 @@ class Retailer
 
         return $client->getJson($this->endpoint . '/' . $retailerCode);
     }
+
+    /**
+     * Hizmet sağlayıcı markasının altındaki bayiyi siler.
+     *
+     * Doc: https://dev.iys.org.tr/api-metotlar/bayi-yonetimi/bayi-silme/
+     *
+     * @param int $retailerCode
+     * @return array|mixed
+     */
+    public function delete(int $retailerCode)
+    {
+        $client = new Client();
+
+        return $client->deleteJson($this->endpoint . '/' . $retailerCode);
+    }
 }

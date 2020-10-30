@@ -64,4 +64,11 @@ class Client
 
         return $response->throw()->json();
     }
+
+    public function deleteJson($endpoint, $params = null)
+    {
+        $response = Http::withToken($this->token)->delete($this->url . $endpoint, $params);
+
+        return $response->throw()->json();
+    }
 }
