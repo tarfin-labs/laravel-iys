@@ -43,4 +43,21 @@ class IysTest extends TestCase
             return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents";
         });
     }
+
+    /** @test */
+    public function user_can_get_status_of_consent()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->consents()->status([
+            'recipient'     => '+905813334455',
+            'recipientType' => 'BIREYSEL',
+            'type'          => 'MESAJ',
+        ]);
+
+        Http::assertSent(function ($request) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/status";
+        });
+    }
 }

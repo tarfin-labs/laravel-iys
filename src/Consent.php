@@ -15,6 +15,7 @@ class Consent
 
     /**
      * Alıcıdan alınmış izinleri tekil olarak İYS'ye yükler.
+     * Doc: https://dev.iys.org.tr/api-metotlar/izin-yonetimi/tekil-izin-ekleme/
      *
      * @param array $params
      * @return array|mixed
@@ -24,5 +25,19 @@ class Consent
         $client = new Client();
 
         return $client->postJson($this->endpoint, $params);
+    }
+
+    /**
+     * Hizmet sağlayıcıların İYS'de kayıtlı olan izinlerini tekil olarak listelemelerini sağlar.
+     * Doc: https://dev.iys.org.tr/api-metotlar/izin-yonetimi/tekil-izin-durumu-sorgulama/
+     *
+     * @param array $params
+     * @return array|mixed
+     */
+    public function status(array $params)
+    {
+        $client = new Client();
+
+        return $client->postJson($this->endpoint . '/status', $params);
     }
 }
