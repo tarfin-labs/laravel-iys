@@ -15,6 +15,7 @@ class Consent
 
     /**
      * Alıcıdan alınmış izinleri tekil olarak İYS'ye yükler.
+     *
      * Doc: https://dev.iys.org.tr/api-metotlar/izin-yonetimi/tekil-izin-ekleme/
      *
      * @param array $params
@@ -29,6 +30,7 @@ class Consent
 
     /**
      * Alıcıdan alınmış izinleri yığın olarak İYS'ye yükler.
+     *
      * Doc: https://dev.iys.org.tr/api-metotlar/izin-yonetimi/asenkron-coklu-izin-ekleme/
      *
      * @param array $params
@@ -43,6 +45,7 @@ class Consent
 
     /**
      * Hizmet sağlayıcıların İYS'de kayıtlı olan izinlerini tekil olarak listelemelerini sağlar.
+     *
      * Doc: https://dev.iys.org.tr/api-metotlar/izin-yonetimi/tekil-izin-durumu-sorgulama/
      *
      * @param array $params
@@ -53,5 +56,21 @@ class Consent
         $client = new Client();
 
         return $client->postJson($this->endpoint . '/status', $params);
+    }
+
+    /**
+     * Asenkron çoklu izin ekleme işlemi sonunda dönen işlem sorgulama bilgisiyle
+     * izin kayıt isteklerinin sonuçlarını sorgular.
+     *
+     * Doc: https://dev.iys.org.tr/api-metotlar/izin-yonetimi/coklu-izin-ekleme-istegi-sorgulama/
+     *
+     * @param string $requestId
+     * @return array|mixed
+     */
+    public function statuses(string $requestId)
+    {
+        $client = new Client();
+
+        return $client->getJson($this->endpoint . '/request/' . $requestId);
     }
 }

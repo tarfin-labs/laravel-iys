@@ -102,4 +102,19 @@ class IysTest extends TestCase
             return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/status";
         });
     }
+
+    /** @test */
+    public function user_can_get_statuses_of_create_many_consent_request()
+    {
+        Http::fake();
+
+        $requestId = '73b75030-3a92-4f1e-b247-b0509dbadbfc';
+
+        $iys = new Iys();
+        $response = $iys->consents()->statuses($requestId);
+
+        Http::assertSent(function ($request) use ($requestId) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/request/{$requestId}";
+        });
+    }
 }

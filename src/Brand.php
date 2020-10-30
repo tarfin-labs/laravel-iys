@@ -16,6 +16,8 @@ class Brand
     /**
      * Hizmet sağlayıcı hesabınızın altında bulunan markalarınızını listeler.
      *
+     * Doc: https://dev.iys.org.tr/api-metotlar/marka-yonetimi/marka-listeleme/
+     *
      * @return array|mixed
      */
     public function all()
