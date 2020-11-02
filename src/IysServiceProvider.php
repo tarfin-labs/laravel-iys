@@ -19,17 +19,9 @@ class IysServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/laravel-iys.php', 'laravel-iys');
-    }
 
-    public static function migrationFileExists(string $migrationFileName): bool
-    {
-        $len = strlen($migrationFileName);
-        foreach (glob(database_path("migrations/*.php")) as $filename) {
-            if ((substr($filename, -$len) === $migrationFileName)) {
-                return true;
-            }
-        }
-
-        return false;
+        $this->app->singleton(Client::class, function ($app) {
+            return new Client();
+        });
     }
 }

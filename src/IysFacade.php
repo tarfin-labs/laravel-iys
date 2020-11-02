@@ -11,6 +11,6 @@ class IysFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'laravel-iys';
+        return 'iys';
     }
 }

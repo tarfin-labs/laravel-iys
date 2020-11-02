@@ -58,6 +58,13 @@ class Client
         return $response->throw()->json();
     }
 
+    public function putJson($endpoint, $params)
+    {
+        $response = Http::withToken($this->token)->put($this->url . $endpoint, $params);
+
+        return $response->throw()->json();
+    }
+
     public function getJson($endpoint, $params = null)
     {
         $response = Http::withToken($this->token)->get($this->url . $endpoint, $params);

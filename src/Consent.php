@@ -23,9 +23,7 @@ class Consent
      */
     public function create(array $params)
     {
-        $client = new Client();
-
-        return $client->postJson($this->endpoint, $params);
+        return app(Client::class)->postJson($this->endpoint, $params);
     }
 
     /**
@@ -38,9 +36,7 @@ class Consent
      */
     public function createMany(array $params)
     {
-        $client = new Client();
-
-        return $client->postJson($this->endpoint . '/request', $params);
+        return app(Client::class)->postJson($this->endpoint . '/request', $params);
     }
 
     /**
@@ -53,9 +49,7 @@ class Consent
      */
     public function status(array $params)
     {
-        $client = new Client();
-
-        return $client->postJson($this->endpoint . '/status', $params);
+        return app(Client::class)->postJson($this->endpoint . '/status', $params);
     }
 
     /**
@@ -69,8 +63,6 @@ class Consent
      */
     public function statuses(string $requestId)
     {
-        $client = new Client();
-
-        return $client->getJson($this->endpoint . '/request/' . $requestId);
+        return app(Client::class)->getJson($this->endpoint . '/request/' . $requestId);
     }
 }

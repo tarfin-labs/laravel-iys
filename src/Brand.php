@@ -22,8 +22,6 @@ class Brand
      */
     public function all()
     {
-        $client = new Client();
-
-        return $client->getJson($this->endpoint);
+        return app(Client::class)->getJson($this->endpoint);
     }
 }

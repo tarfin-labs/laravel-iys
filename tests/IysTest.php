@@ -206,4 +206,40 @@ class IysTest extends TestCase
             return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers/{$retailerCode}";
         });
     }
+
+    /** @test */
+    public function user_can_give_access_to_retailers()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->retailers()->giveAccess([
+            'recipient' => '+905370000000',
+            'recipientType' => 'TACIR',
+            'type' => 'EPOSTA',
+            'retailerAccess' =>  [66438915, 66438916],
+        ]);
+
+        Http::assertSent(function ($request) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers/access";
+        });
+    }
+
+    /** @test */
+    public function user_can_give_many_access_to_retailers()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->retailers()->giveManyAccess([
+            'recipient' => ['+905370000000', '+905370000001'],
+            'recipientType' => 'TACIR',
+            'type' => 'EPOSTA',
+            'retailerAccess' =>  [66438915, 66438916],
+        ]);
+
+        Http::assertSent(function ($request) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers/access";
+        });
+    }
 }
