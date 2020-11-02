@@ -213,7 +213,7 @@ class IysTest extends TestCase
         Http::fake();
 
         $iys = new Iys();
-        $response = $iys->retailers()->giveAccess([
+        $response = $iys->consents()->giveAccess([
             'recipient' => '+905370000000',
             'recipientType' => 'TACIR',
             'type' => 'EPOSTA',
@@ -221,7 +221,7 @@ class IysTest extends TestCase
         ]);
 
         Http::assertSent(function ($request) {
-            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers/access";
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/retailers/access";
         });
     }
 
@@ -231,15 +231,104 @@ class IysTest extends TestCase
         Http::fake();
 
         $iys = new Iys();
-        $response = $iys->retailers()->giveManyAccess([
-            'recipient' => ['+905370000000', '+905370000001'],
-            'recipientType' => 'TACIR',
-            'type' => 'EPOSTA',
-            'retailerAccess' =>  [66438915, 66438916],
+        $response = $iys->consents()->giveManyAccess([
+            'recipient'      => [
+                '+905370000000',
+                '+905370000001'
+            ],
+            'recipientType'  => 'TACIR',
+            'type'           => 'EPOSTA',
+            'retailerAccess' => [
+                66438915,
+                66438916
+            ],
         ]);
 
         Http::assertSent(function ($request) {
-            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/retailers/access";
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/retailers/access";
+        });
+    }
+
+    /** @test */
+    public function user_can_list_access()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->consents()->accessList([
+            'recipient'     => 'ornek@deneme.com',
+            'recipientType' => 'TACIR',
+            'type'          => 'MESAJ',
+        ]);
+
+        Http::assertSent(function ($request) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/retailers/access/list";
+        });
+    }
+
+    /** @test */
+    public function user_can_list_access_with_custom_pagination()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->consents()->accessList([
+            'recipient'     => 'ornek@deneme.com',
+            'recipientType' => 'TACIR',
+            'type'          => 'MESAJ',
+        ], 100, 10);
+
+        $query = http_build_query([
+            'offset' => 100,
+            'limit'  => 10,
+        ]);
+
+        Http::assertSent(function ($request) use ($query) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/retailers/access/list?" . $query;
+        });
+    }
+
+    /** @test */
+    public function user_can_delete_access_from_retailer()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->consents()->deleteAccess([
+            'recipients'     => [
+                '+905377115251',
+                '+905377115251',
+            ],
+            'recipientType'  => 'BIREYSEL',
+            'type'           => 'MESAJ',
+            'retailerAccess' => [
+                66438915,
+                66438916,
+            ],
+        ]);
+
+        Http::assertSent(function ($request) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/retailer/access/remove";
+        });
+    }
+
+    /** @test */
+    public function user_can_delete_all_access_from_retailer()
+    {
+        Http::fake();
+
+        $iys = new Iys();
+        $response = $iys->consents()->deleteAllAccess([
+            'recipients'     => [
+                '+905377115251',
+                '+905377115251',
+            ],
+            'recipientType'  => 'BIREYSEL',
+            'type'           => 'MESAJ',
+        ]);
+
+        Http::assertSent(function ($request) {
+            return $request->url() == $this->config['url'] . "/sps/{$this->config['iys_code']}/brands/{$this->config['brand_code']}/consents/retailer/access/remove/all";
         });
     }
 }
